@@ -7,19 +7,20 @@ class App extends Component {
     super(props);
 
     this.state = {
-      members: [],
-    }
+      members: []
+    };
   }
 
   componentDidMount() {
     const slackClient = new WebClient(process.env.SLACKTOKEN);
 
-    slackClient.users.list({include_locale: true, presence: true,})
-      .then((res) => {
-        console.log(res.members)
+    slackClient.users
+      .list({ include_locale: true, presence: true })
+      .then(res => {
+        console.log(res.members);
         this.setState({
-          members: res.members,
-        })
+          members: res.members
+        });
       })
       .catch(console.error);
   }
@@ -31,9 +32,7 @@ class App extends Component {
           <h1>Presence</h1>
         </header>
         <div>
-        {this.state.members.map((member) => (
-          <Member {...member.profile} />
-        ))}
+          {this.state.members.map(member => <Member {...member.profile} />)}
         </div>
       </div>
     );
